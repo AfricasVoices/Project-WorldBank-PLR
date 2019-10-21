@@ -26,7 +26,7 @@ DATASETS=(
 )
 
 cd "$CODA_V2_ROOT/data_tools"
-git checkout "6019a60c855f5da3d82ad8d1423303ce4d6914b6"  # (master which supports segmenting)
+git checkout "f01584343abd02a65254e5b11f1a54b965e3e334"  # (master which supports segmenting)
 
 mkdir -p "$DATA_ROOT/Coded Coda Files"
 

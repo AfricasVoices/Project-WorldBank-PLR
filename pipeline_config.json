@@ -31,6 +31,7 @@
         "csap_s05e01_activation"
       ],
       "SurveyFlowNames": [
+        "csap_s04_demog",
         "csap_s05_demog"
       ],
       "TestContactUUIDs": [

@@ -114,12 +114,12 @@
   "MoveWSMessages": false,
   "DriveUpload": {
     "DriveCredentialsFileURL": "gs://avf-credentials/pipeline-runner-service-acct-avf-data-core-64cc71459fe7.json",
-    "ProductionUploadPath": "worldbank_plr_analysis_outputs/csap_s04_production.csv",
-    "MessagesUploadPath": "worldbank_plr_analysis_outputs/csap_s04_messages.csv",
-    "IndividualsUploadPath": "worldbank_plr_analysis_outputs/csap_s04_individuals.csv",
-    "MessagesTracedDataUploadPath": "worldbank_plr_analysis_outputs/csap_s04_traced_data_messages.jsonl",
-    "IndividualsTracedDataUploadPath": "worldbank_plr_analysis_outputs/csap_s04_traced_data_individuals.jsonl",
-    "AnalysisGraphsDir": "worldbank_plr_analysis_outputs/csap_s04_graphs"
+    "ProductionUploadPath": "worldbank_plr_analysis_outputs/csap_s05_production.csv",
+    "MessagesUploadPath": "worldbank_plr_analysis_outputs/csap_s05_messages.csv",
+    "IndividualsUploadPath": "worldbank_plr_analysis_outputs/csap_s05_individuals.csv",
+    "MessagesTracedDataUploadPath": "worldbank_plr_analysis_outputs/csap_s05_traced_data_messages.jsonl",
+    "IndividualsTracedDataUploadPath": "worldbank_plr_analysis_outputs/csap_s05_traced_data_individuals.jsonl",
+    "AnalysisGraphsDir": "worldbank_plr_analysis_outputs/csap_s05_graphs"
   },
   "FlowDefinitionsUploadURLPrefix": "gs://avf-flow-definitions-test/WorldBank-PLR-test-",
   "MemoryProfileUploadURLPrefix": "gs://avf-pipeline-logs-performance-nearline/2019/WorldBank-PLR/memory-",

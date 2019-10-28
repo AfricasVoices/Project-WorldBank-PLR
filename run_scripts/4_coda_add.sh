@@ -39,7 +39,7 @@ DATASETS=(
 )
 
 cd "$CODA_V2_ROOT/data_tools"
-git checkout "f01584343abd02a65254e5b11f1a54b965e3e334"  # (master which supports segmenting)
+git checkout "9a9a8e708e3f20f37848a6b02f79bcee43e5be3b"  # (master which supports segmenting)
 
 for DATASET in ${DATASETS[@]}
 do

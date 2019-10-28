@@ -17,10 +17,36 @@ class CodingModes(object):
 
 
 class FoldingModes(object):
+    """
+    Configures how a column of data should be combined when folding multiple messages objects into a single 
+    individuals object.
+    """
+
     ASSERT_EQUAL = "ASSERT_EQUAL"
+    """
+    Check that the column is the same across all message objects for this individual, and fail the program if any 
+    are different. Use for columns that should be identical across all the message objects.
+    """
+
     YES_NO_AMB = "YES_NO_AMB"
+    """
+    Set the folded column to Codes.YES if all message objects have value Codes.YES, Codes.NO if all message objects have
+    value Codes.NO, or Codes.AMBIVALENT otherwise (with some additional logic for handling control codes). 
+    Use for columns containing yes/no/ambivalent codes which can vary between message objects for the same person.
+    """
+
     CONCATENATE = "CONCATENATE"
+    """
+    Join all the values in the input message objects, separating them by a ';'. For example, the messages "a", "b", and
+    "c" will be folded to "a;b;c". Uses for columns which differ and where all the original messages should be 
+    preserved.
+    """
+
     MATRIX = "MATRIX"
+    """
+    Set the folded value to Codes.MATRIX_1 if either input is Codes.MATRIX_1, otherwise to Codes.MATRIX_0 or the 
+    appropriate control code. Use for columns in matrix representation.
+    """
 
 
 class CodingConfiguration(object):

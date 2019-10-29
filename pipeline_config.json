@@ -103,8 +103,6 @@
     "ProductionUploadPath": "worldbank_plr_analysis_outputs/csap_s05_production.csv",
     "MessagesUploadPath": "worldbank_plr_analysis_outputs/csap_s05_messages.csv",
     "IndividualsUploadPath": "worldbank_plr_analysis_outputs/csap_s05_individuals.csv",
-    "MessagesTracedDataUploadPath": "worldbank_plr_analysis_outputs/csap_s05_traced_data_messages.jsonl",
-    "IndividualsTracedDataUploadPath": "worldbank_plr_analysis_outputs/csap_s05_traced_data_individuals.jsonl",
     "AnalysisGraphsDir": "worldbank_plr_analysis_outputs/csap_s05_graphs"
   },
   "FlowDefinitionsUploadURLPrefix": "gs://avf-flow-definitions-test/WorldBank-PLR-test-",

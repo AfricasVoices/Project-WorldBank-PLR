@@ -169,20 +169,6 @@ if __name__ == "__main__":
         drive_client_wrapper.update_or_create(csv_by_individual_output_path, individuals_csv_drive_dir,
                                               target_file_name=individuals_csv_drive_file_name,
                                               target_folder_is_shared_with_me=True)
-
-        traced_data_drive_dir = os.path.dirname(pipeline_configuration.drive_upload.messages_traced_data_upload_path)
-        traced_data_drive_file_name = os.path.basename(
-            pipeline_configuration.drive_upload.messages_traced_data_upload_path)
-        drive_client_wrapper.update_or_create(messages_json_output_path, traced_data_drive_dir,
-                                              target_file_name=traced_data_drive_file_name,
-                                              target_folder_is_shared_with_me=True)
-
-        traced_data_drive_dir = os.path.dirname(pipeline_configuration.drive_upload.individuals_traced_data_upload_path)
-        traced_data_drive_file_name = os.path.basename(
-            pipeline_configuration.drive_upload.individuals_traced_data_upload_path)
-        drive_client_wrapper.update_or_create(individuals_json_output_path, traced_data_drive_dir,
-                                              target_file_name=traced_data_drive_file_name,
-                                              target_folder_is_shared_with_me=True)
     else:
         log.info("Skipping uploading to Google Drive (because the pipeline configuration json does not contain the key "
                  "'DriveUploadPaths')")

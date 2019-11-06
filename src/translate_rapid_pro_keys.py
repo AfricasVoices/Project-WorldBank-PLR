@@ -122,8 +122,9 @@ class TranslateRapidProKeys(object):
         :type pipeline_configuration: PipelineConfiguration
         """
         for td in data:
+            old_keys = set()
             remapped = dict()
-               
+
             for remapping in pipeline_configuration.rapid_pro_key_remappings:
                 if remapping.is_activation_message:
                     continue
@@ -132,8 +133,10 @@ class TranslateRapidProKeys(object):
                 new_key = remapping.pipeline_key
                 
                 if old_key in td and new_key not in td:
+                    old_keys.add(old_key)
                     remapped[new_key] = td[old_key]
 
+            td.hide_keys(old_keys, Metadata(user, Metadata.get_call_location(), TimeUtils.utc_now_as_iso_string()))
             td.append_data(remapped, Metadata(user, Metadata.get_call_location(), TimeUtils.utc_now_as_iso_string()))
 
     @classmethod

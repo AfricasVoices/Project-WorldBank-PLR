@@ -535,8 +535,8 @@ class TimestampRemapping(object):
         :param range_end_exclusive: End datetime for the time range to remap radio show messages from, exclusive.
                                     If None, defaults to the end of time.
         :type range_end_exclusive: datetime | None
-        :param time_to_adjust_to: Datetime to assign to the 'sent_on' field of re-mapped shows.
-                                  If None, re-mapped shows will not have timestamps re-adjusted.
+        :param time_to_adjust_to: Datetime to adjust each message object's `time_key` field to, or None.
+                                  If None, re-mapped shows will not have timestamps adjusted.
         :type time_to_adjust_to: datetime | None
         """
         if range_start_inclusive is None:

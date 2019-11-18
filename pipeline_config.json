@@ -94,9 +94,9 @@
     {"RapidProKey": "Idp_Camp (Text) - csap_s05_demog", "PipelineKey": "in_idp_camp_raw"},
     {"RapidProKey": "Idp_Camp (Time) - csap_s05_demog", "PipelineKey": "in_idp_camp_time"}
   ],
-  "ProjectStartDate": "2001-01-01T00:00:00+03:00",
+  "ProjectStartDate": "2019-12-01T00:00:00+03:00",
   "ProjectEndDate": "2100-01-01T00:00:00+03:00",
-  "FilterTestMessages": false,
+  "FilterTestMessages": true,
   "MoveWSMessages": false,
   "DriveUpload": {
     "DriveCredentialsFileURL": "gs://avf-credentials/pipeline-runner-service-acct-avf-data-core-64cc71459fe7.json",

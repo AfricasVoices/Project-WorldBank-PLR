@@ -248,8 +248,7 @@ class PipelineConfiguration(object):
 
     def __init__(self, raw_data_sources, phone_number_uuid_table, timestamp_remappings,
                  rapid_pro_key_remappings, project_start_date, project_end_date, filter_test_messages, move_ws_messages,
-                 flow_definitions_upload_url_prefix, memory_profile_upload_url_prefix, data_archive_upload_url_prefix,
-                 drive_upload=None):
+                 memory_profile_upload_url_prefix, data_archive_upload_url_prefix, drive_upload=None):
         """
         :param raw_data_sources: List of sources to pull the various raw run files from.
         :type raw_data_sources: list of RawDataSource
@@ -267,10 +266,6 @@ class PipelineConfiguration(object):
         :type filter_test_messages: bool
         :param move_ws_messages: Whether to move messages labelled as Wrong Scheme to the correct dataset.
         :type move_ws_messages: bool
-        :param flow_definitions_upload_url_prefix: The prefix of the GS URL to upload serialised flow definitions to.
-                                                   This prefix will be appended with the current datetime and the
-                                                   ".json" file extension.
-        :type flow_definitions_upload_url_prefix: str
         :param memory_profile_upload_url_prefix: The prefix of the GS URL to upload the memory profile log to.
                                                  This prefix will be appended by the id of the pipeline run (provided
                                                  as a command line argument), and the ".profile" file extension.
@@ -288,7 +283,6 @@ class PipelineConfiguration(object):
         self.filter_test_messages = filter_test_messages
         self.move_ws_messages = move_ws_messages
         self.drive_upload = drive_upload
-        self.flow_definitions_upload_url_prefix = flow_definitions_upload_url_prefix
         self.memory_profile_upload_url_prefix = memory_profile_upload_url_prefix
         self.data_archive_upload_url_prefix = data_archive_upload_url_prefix
 
@@ -329,14 +323,12 @@ class PipelineConfiguration(object):
         if "DriveUpload" in configuration_dict:
             drive_upload_paths = DriveUpload.from_configuration_dict(configuration_dict["DriveUpload"])
 
-        flow_definitions_upload_url_prefix = configuration_dict["FlowDefinitionsUploadURLPrefix"]
         memory_profile_upload_url_prefix = configuration_dict["MemoryProfileUploadURLPrefix"]
         data_archive_upload_url_prefix = configuration_dict["DataArchiveUploadURLPrefix"]
 
         return cls(raw_data_sources, phone_number_uuid_table, timestamp_remappings,
                    rapid_pro_key_remappings, project_start_date, project_end_date, filter_test_messages,
-                   move_ws_messages,
-                   flow_definitions_upload_url_prefix, memory_profile_upload_url_prefix, data_archive_upload_url_prefix,
+                   move_ws_messages, memory_profile_upload_url_prefix, data_archive_upload_url_prefix,
                    drive_upload_paths)
 
     @classmethod
@@ -369,7 +361,6 @@ class PipelineConfiguration(object):
                 "drive_upload is not of type DriveUpload"
             self.drive_upload.validate()
 
-        validators.validate_string(self.flow_definitions_upload_url_prefix, "flow_definitions_upload_url_prefix")
         validators.validate_string(self.memory_profile_upload_url_prefix, "memory_profile_upload_url_prefix")
 
 

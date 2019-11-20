@@ -105,7 +105,6 @@
     "IndividualsUploadPath": "worldbank_plr_analysis_outputs/csap_s05_individuals.csv",
     "AnalysisGraphsDir": "worldbank_plr_analysis_outputs/csap_s05_graphs"
   },
-  "FlowDefinitionsUploadURLPrefix": "gs://avf-flow-definitions-test/WorldBank-PLR-test-",
   "MemoryProfileUploadURLPrefix": "gs://avf-pipeline-logs-performance-nearline/2019/WorldBank-PLR/memory-",
   "DataArchiveUploadURLPrefix": "gs://pipeline-execution-backup-archive/2019/WorldBank-PLR/data-"
 }

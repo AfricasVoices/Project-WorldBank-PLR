@@ -3,7 +3,198 @@
   "Name": "S05E01 Reasons",
   "Version": "0.0.0.1",
   "Codes": [
-
+    {
+      "CodeID": "code-462cdc21",
+      "CodeType": "Normal",
+      "DisplayText": "education",
+      "NumericValue": 1,
+      "StringValue": "education",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-bd322103",
+      "CodeType": "Normal",
+      "DisplayText": "better governance",
+      "NumericValue": 2,
+      "StringValue": "better_governance",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-d7bdd1eb",
+      "CodeType": "Normal",
+      "DisplayText": "justice",
+      "NumericValue": 3,
+      "StringValue": "justice",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-a31aabea",
+      "CodeType": "Normal",
+      "DisplayText": "corruption",
+      "NumericValue": 4,
+      "StringValue": "corruption",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-df922f04",
+      "CodeType": "Normal",
+      "DisplayText": "health",
+      "NumericValue": 5,
+      "StringValue": "health",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-4dd59600",
+      "CodeType": "Normal",
+      "DisplayText": "access to water",
+      "NumericValue": 6,
+      "StringValue": "access_to_water",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-793cdcd5",
+      "CodeType": "Normal",
+      "DisplayText": "food",
+      "NumericValue": 7,
+      "StringValue": "food",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-760aae4d",
+      "CodeType": "Normal",
+      "DisplayText": "housing",
+      "NumericValue": 8,
+      "StringValue": "housing",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-6eaa05b3",
+      "CodeType": "Normal",
+      "DisplayText": "boost economic growth",
+      "NumericValue": 9,
+      "StringValue": "boost_economic_growth",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-64ce7508",
+      "CodeType": "Normal",
+      "DisplayText": "tax utilization",
+      "NumericValue": 10,
+      "StringValue": "tax_utilization",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-2c20f15f",
+      "CodeType": "Normal",
+      "DisplayText": "support for agriculture",
+      "NumericValue": 11,
+      "StringValue": "support_for_agriculture",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-48ed270d",
+      "CodeType": "Normal",
+      "DisplayText": "invest in roads",
+      "NumericValue": 12,
+      "StringValue": "invest_in_roads",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-f2ab8203",
+      "CodeType": "Normal",
+      "DisplayText": "peace and security",
+      "NumericValue": 13,
+      "StringValue": "peace_and_security",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-ae4e30dc",
+      "CodeType": "Normal",
+      "DisplayText": "information",
+      "NumericValue": 14,
+      "StringValue": "information",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-19ad469b",
+      "CodeType": "Normal",
+      "DisplayText": "hygiene",
+      "NumericValue": 15,
+      "StringValue": "hygiene",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-f9353895",
+      "CodeType": "Normal",
+      "DisplayText": "job creation",
+      "NumericValue": 16,
+      "StringValue": "job_creation",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-085c89b4",
+      "CodeType": "Normal",
+      "DisplayText": "cooperation between the government and citizens",
+      "NumericValue": 17,
+      "StringValue": "cooperation_between_the_government_and_citizens",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-4fb6fd67",
+      "CodeType": "Normal",
+      "DisplayText": "community collaboration",
+      "NumericValue": 18,
+      "StringValue": "community_collaboration",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-e6400bbc",
+      "CodeType": "Normal",
+      "DisplayText": "resettlement/return",
+      "NumericValue": 19,
+      "StringValue": "resettlement_return",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-dce74be1",
+      "CodeType": "Normal",
+      "DisplayText": "adherence to religion",
+      "NumericValue": 20,
+      "StringValue": "adherence_to_religion",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-486c0683",
+      "CodeType": "Normal",
+      "DisplayText": "building resilience against droughts",
+      "NumericValue": 21,
+      "StringValue": "building_resilience_against_droughts",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-b629e74b",
+      "CodeType": "Normal",
+      "DisplayText": "stop drug abuse",
+      "NumericValue": 22,
+      "StringValue": "stop_drug_abuse",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-4283146c",
+      "CodeType": "Normal",
+      "DisplayText": "building resilience against floods",
+      "NumericValue": 23,
+      "StringValue": "building_resilience_against_floods",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-5c171cec",
+      "CodeType": "Normal",
+      "DisplayText": "other",
+      "NumericValue": 24,
+      "StringValue": "other",
+      "VisibleInCoda": true
+    },
     {
       "CodeID": "code-NA-f93d3eb7",
       "CodeType": "Control",

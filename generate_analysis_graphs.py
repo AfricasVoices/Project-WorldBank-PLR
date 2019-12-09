@@ -1,10 +1,12 @@
 import argparse
+import csv
 import glob
 import json
 from collections import OrderedDict
 
 import altair
 from core_data_modules.cleaners import Codes
+from core_data_modules.data_models.code_scheme import CodeTypes
 from core_data_modules.logging import Logger
 from core_data_modules.traced_data.io import TracedDataJsonIO
 from core_data_modules.util import IOUtils
@@ -14,7 +16,7 @@ from storage.google_drive import drive_client_wrapper
 from src.lib import PipelineConfiguration
 from src.lib.pipeline_configuration import CodingModes
 
-Logger.set_project_name("WorldBank-PLR")
+Logger.set_project_name("OCHA")
 log = Logger(__name__)
 
 IMG_SCALE_FACTOR = 10  # Increase this to increase the resolution of the outputted PNGs
@@ -27,7 +29,7 @@ if __name__ == "__main__":
                         help="Path to a Google Cloud service account credentials file to use to access the "
                              "credentials bucket")
     parser.add_argument("pipeline_configuration_file_path", metavar="pipeline-configuration-file",
-                       help="Path to the pipeline configuration json file")
+                        help="Path to the pipeline configuration json file")
 
     parser.add_argument("messages_json_input_path", metavar="messages-json-input-path",
                         help="Path to a JSONL file to read the TracedData of the messages data from")
@@ -70,49 +72,272 @@ if __name__ == "__main__":
         individuals = TracedDataJsonIO.import_jsonl_to_traced_data_iterable(f)
     log.info(f"Loaded {len(individuals)} individuals")
 
-    # Compute the number of messages in each show and graph
-    log.info(f"Graphing the number of messages received in response to each show...")
-    messages_per_show = OrderedDict()  # Of radio show index to messages count
+    # Compute the number of messages, individuals, and relevant messages per episode and overall.
+    log.info("Computing the per-episode and per-season engagement counts...")
+    engagement_counts = OrderedDict()
     for plan in PipelineConfiguration.RQA_CODING_PLANS:
-        messages_per_show[plan.raw_field] = 0
+        # TODO: Add another field to CodingPlan so that we can give the weeks better names than the raw_field
+        engagement_counts[plan.raw_field] = {
+            "Episode": plan.raw_field,
+            "Total Messages": 0,
+            "Relevant Messages": 0,
+            "Total Participants": 0,
+            "% Relevant Messages": None
+        }
+    engagement_counts["Total"] = {
+        "Episode": "Total",
+        "Total Messages": 0,
+        "Relevant Messages": 0,
+        "Total Participants": 0,
+        "% Relevant Messages": None
+    }
 
+    # Compute, per episode and across the season:
+    #  - Total Messages, by counting the number of consenting message objects that contain the raw_field key each week.
+    #  - Relevant Messages, by counting the number of consenting message objects which are coded with codes of type
+    #    CodeTypes.NORMAL. If a message was coded under multiple schemes, an additional assert is performed to ensure
+    #    the message was labelled with the same code type across all of those schemes.
     for msg in messages:
-        for plan in PipelineConfiguration.RQA_CODING_PLANS:
-            if msg.get(plan.raw_field, "") != "" and msg["consent_withdrawn"] == "false":
-                messages_per_show[plan.raw_field] += 1
+        if msg["consent_withdrawn"] == Codes.FALSE:
+            for plan in PipelineConfiguration.RQA_CODING_PLANS:
+                if plan.raw_field in msg:
+                    engagement_counts[plan.raw_field]["Total Messages"] += 1
+                    engagement_counts["Total"]["Total Messages"] += 1
 
-    chart = altair.Chart(
-        altair.Data(values=[{"show": k, "count": v} for k, v in messages_per_show.items()])
-    ).mark_bar().encode(
-        x=altair.X("show:N", title="Show", sort=list(messages_per_show.keys())),
-        y=altair.Y("count:Q", title="Number of Messages")
-    ).properties(
-        title="Messages per Show"
-    )
-    chart.save(f"{output_dir}/messages_per_show.html")
-    chart.save(f"{output_dir}/messages_per_show.png", scale_factor=IMG_SCALE_FACTOR)
+                    # Get all the codes for this message under this code scheme
+                    codes = []
+                    for cc in plan.coding_configurations:
+                        if cc.coding_mode == CodingModes.SINGLE:
+                            codes.append(cc.code_scheme.get_code_with_code_id(msg[cc.coded_field]["CodeID"]))
+                        else:
+                            assert cc.coding_mode == CodingModes.MULTIPLE
+                            for label in msg[cc.coded_field]:
+                                codes.append(cc.code_scheme.get_code_with_code_id(label["CodeID"]))
 
-    # Compute the number of individuals in each show and graph
-    log.info(f"Graphing the number of individuals who responded to each show...")
-    individuals_per_show = OrderedDict()  # Of radio show index to individuals count
-    for plan in PipelineConfiguration.RQA_CODING_PLANS:
-        individuals_per_show[plan.raw_field] = 0
+                    # Increment the count of relevant messages if the code is labelled with at least one normal code.
+                    code_types = [code.code_type for code in codes]
+                    if CodeTypes.NORMAL in code_types:
+                        engagement_counts[plan.raw_field]["Relevant Messages"] += 1
+                        engagement_counts["Total"]["Relevant Messages"] += 1
+
+    # Compute, per episode and across the season:
+    #  - Total Participants, by counting the number of consenting individuals objects that contain the raw_field key
+    #    each week.
+    for ind in individuals:
+        if ind["consent_withdrawn"] == Codes.FALSE:
+            engagement_counts["Total"]["Total Participants"] += 1
+            for plan in PipelineConfiguration.RQA_CODING_PLANS:
+                if plan.raw_field in ind:
+                    engagement_counts[plan.raw_field]["Total Participants"] += 1
+
+    # Compute:
+    #  - % Relevant Messages, by computing Relevant Messages / Total Messages * 100, to 1 decimal place.
+    for count in engagement_counts.values():
+        count["% Relevant Messages"] = round(count["Relevant Messages"] / count["Total Messages"] * 100, 1)
+
+    # Export the engagement counts to a csv.
+    with open(f"{output_dir}/engagement_counts.csv", "w") as f:
+        headers = ["Episode", "Total Messages", "Relevant Messages", "% Relevant Messages", "Total Participants"]
+        writer = csv.DictWriter(f, fieldnames=headers, lineterminator="\n")
+        writer.writeheader()
+
+        for row in engagement_counts.values():
+            writer.writerow(row)
+
+    log.info("Computing the participation frequencies...")
+    repeat_participations = OrderedDict()
+    for i in range(1, len(PipelineConfiguration.RQA_CODING_PLANS) + 1):
+        repeat_participations[i] = {
+            "Episodes Participated In": i,
+            "Number of Individuals": 0,
+            "% of Individuals": None
+        }
+
+    # Compute the number of individuals who participated each possible number of times, from 1 to <number of RQAs>
+    # An individual is considered to have participated if they sent a message and didn't opt-out, regardless of the
+    # relevance of any of their messages.
+    for ind in individuals:
+        if ind["consent_withdrawn"] == Codes.FALSE:
+            weeks_participated = 0
+            for plan in PipelineConfiguration.RQA_CODING_PLANS:
+                if plan.raw_field in ind:
+                    weeks_participated += 1
+            assert weeks_participated != 0, f"Found individual '{ind['uid']}' with no participation in any week"
+            repeat_participations[weeks_participated]["Number of Individuals"] += 1
+
+    # Compute the percentage of individuals who participated each possible number of times.
+    # Percentages are computed after excluding individuals who opted out.
+    total_individuals = len([td for td in individuals if td["consent_withdrawn"] == Codes.FALSE])
+    for rp in repeat_participations.values():
+        rp["% of Individuals"] = round(rp["Number of Individuals"] / total_individuals * 100, 1)
+
+    # Export the participation frequency data to a csv
+    with open(f"{output_dir}/repeat_participations.csv", "w") as f:
+        headers = ["Episodes Participated In", "Number of Individuals", "% of Individuals"]
+        writer = csv.DictWriter(f, fieldnames=headers, lineterminator="\n")
+        writer.writeheader()
+
+        for row in repeat_participations.values():
+            writer.writerow(row)
+
+    log.info("Computing the demographic distributions...")
+    # Compute the number of individuals with each demographic code.
+    # Count excludes individuals who withdrew consent. STOP codes in each scheme are not exported, as it would look
+    # like 0 individuals opted out otherwise, which could be confusing.
+    # TODO: Report percentages?
+    # TODO: Handle distributions for other variables too or just demographics?
+    # TODO: Categorise age
+    demographic_distributions = OrderedDict()  # of analysis_file_key -> code string_value -> number of individuals
+    for plan in PipelineConfiguration.DEMOG_CODING_PLANS:
+        for cc in plan.coding_configurations:
+            if cc.analysis_file_key is None:
+                continue
+
+            demographic_distributions[cc.analysis_file_key] = OrderedDict()
+            for code in cc.code_scheme.codes:
+                if code.control_code == Codes.STOP:
+                    continue
+                demographic_distributions[cc.analysis_file_key][code.string_value] = 0
 
     for ind in individuals:
-        for plan in PipelineConfiguration.RQA_CODING_PLANS:
-            if ind.get(plan.raw_field, "") != "" and ind["consent_withdrawn"] == "false":
-                individuals_per_show[plan.raw_field] += 1
+        if ind["consent_withdrawn"] == Codes.TRUE:
+            continue
 
-    chart = altair.Chart(
-        altair.Data(values=[{"show": k, "count": v} for k, v in individuals_per_show.items()])
+        for plan in PipelineConfiguration.DEMOG_CODING_PLANS:
+            for cc in plan.coding_configurations:
+                if cc.analysis_file_key is None:
+                    continue
+
+                code = cc.code_scheme.get_code_with_code_id(ind[cc.coded_field]["CodeID"])
+                if code.control_code == Codes.STOP:
+                    continue
+                demographic_distributions[cc.analysis_file_key][code.string_value] += 1
+
+    with open(f"{output_dir}/demographic_distributions.csv", "w") as f:
+        headers = ["Demographic", "Code", "Number of Individuals"]
+        writer = csv.DictWriter(f, fieldnames=headers, lineterminator="\n")
+        writer.writeheader()
+
+        last_demographic = None
+        for demographic, counts in demographic_distributions.items():
+            for code_string_value, number_of_individuals in counts.items():
+                writer.writerow({
+                    "Demographic": demographic if demographic != last_demographic else "",
+                    "Code": code_string_value,
+                    "Number of Individuals": number_of_individuals
+                })
+                last_demographic = demographic
+
+    # Compute the theme distributions
+    log.info("Computing the theme distributions...")
+
+    def make_survey_counts_dict():
+        survey_counts = OrderedDict()
+        survey_counts["Total"] = 0
+        for plan in PipelineConfiguration.SURVEY_CODING_PLANS:
+            for cc in plan.coding_configurations:
+                if cc.analysis_file_key is None:
+                    continue
+                for code in cc.code_scheme.codes:
+                    if code.control_code == Codes.STOP:
+                        continue  # Ignore STOP codes because we already excluded everyone who opted out.
+                    survey_counts[f"{cc.analysis_file_key}:{code.string_value}"] = 0
+        return survey_counts
+
+    def update_survey_counts(survey_counts, td):
+        for plan in PipelineConfiguration.SURVEY_CODING_PLANS:
+            for cc in plan.coding_configurations:
+                if cc.analysis_file_key is None:
+                    continue
+                if cc.coding_mode == CodingModes.SINGLE:
+                    code = cc.code_scheme.get_code_with_code_id(td[cc.coded_field]["CodeID"])
+                    if code.control_code == Codes.STOP:
+                        continue
+                    survey_counts[f"{cc.analysis_file_key}:{code.string_value}"] += 1
+                else:
+                    assert cc.coding_mode == CodingModes.MULTIPLE
+                    for label in td[cc.coded_field]:
+                        code = cc.code_scheme.get_code_with_code_id(label["CodeID"])
+                        survey_counts[f"{cc.analysis_file_key}:{code.string_value}"] += 1
+
+
+    episodes = OrderedDict()
+    for episode_plan in PipelineConfiguration.RQA_CODING_PLANS:
+        # Prepare empty counts of the survey responses for each variable
+        themes = OrderedDict()
+        episodes[episode_plan.raw_field] = themes
+        for cc in episode_plan.coding_configurations:
+            if cc.coding_mode == CodingModes.SINGLE:
+                themes[cc.analysis_file_key] = make_survey_counts_dict()
+            else:
+                assert cc.coding_mode == CodingModes.MULTIPLE
+                themes["Total"] = make_survey_counts_dict()
+                for code in cc.code_scheme.codes:
+                    if code.control_code == Codes.STOP:
+                        continue
+                    themes[f"{cc.analysis_file_key}{code.string_value}"] = make_survey_counts_dict()
+
+        # Fill in the counts by iterating over every individual
+        for td in individuals:
+            if td["consent_withdrawn"] == Codes.TRUE:
+                continue
+
+            for cc in episode_plan.coding_configurations:
+                if cc.coding_mode == CodingModes.SINGLE:
+                    themes[cc.analysis_file_key]["Total"] += 1
+                    update_survey_counts(themes[cc.analysis_file_key], td)
+                else:
+                    assert cc.coding_mode == CodingModes.MULTIPLE
+                    themes["Total"]["Total"] += 1
+                    update_survey_counts(themes["Total"], td)
+                    for label in td[cc.coded_field]:
+                        code = cc.code_scheme.get_code_with_code_id(label["CodeID"])
+                        if code.control_code == Codes.STOP:
+                            continue
+                        themes[f"{cc.analysis_file_key}{code.string_value}"]["Total"] += 1
+                        update_survey_counts(themes[f"{cc.analysis_file_key}{code.string_value}"], td)
+
+    with open(f"{output_dir}/theme_distributions.csv", "w") as f:
+        f.write("CAUTION: The totals reported here show the number of times each theme was reported not "
+                "the number of individuals. Demographic totals apply to all codes (including NA NC etc.) \n")
+
+        headers = ["Question", "Variable"] + list(make_survey_counts_dict().keys())
+        writer = csv.DictWriter(f, fieldnames=headers, lineterminator="\n")
+        writer.writeheader()
+
+        last_row_episode = None
+        for episode, themes in episodes.items():
+            for theme, survey_counts in themes.items():
+                row = {
+                    "Question": episode if episode != last_row_episode else "",
+                    "Variable": theme,
+                }
+                row.update(survey_counts)
+                writer.writerow(row)
+                last_row_episode = episode
+
+    log.info("Graphing the per-episode engagement counts...")
+    # Graph the number of messages in each episode
+    altair.Chart(
+        altair.Data(values=[{"episode": x["Episode"], "count": x["Total Messages"]}
+                            for x in engagement_counts.values() if x["Episode"] != "Total"])
     ).mark_bar().encode(
-        x=altair.X("show:N", title="Show", sort=list(individuals_per_show.keys())),
-        y=altair.Y("count:Q", title="Number of Individuals")
+        x=altair.X("episode:N", title="Episode"),
+        y=altair.Y("count:Q", title="Number of Messages")
     ).properties(
-        title="Individuals per Show"
-    )
-    chart.save(f"{output_dir}/individuals_per_show.html")
-    chart.save(f"{output_dir}/individuals_per_show.png", scale_factor=IMG_SCALE_FACTOR)
+        title="Messages per Episode"
+    ).save(f"{output_dir}/messages_per_episode.png", scale_factor=IMG_SCALE_FACTOR)
+
+    # Graph the number of participants in each episode
+    altair.Chart(
+        altair.Data(values=[{"episode": x["Episode"], "count": x["Total Participants"]}
+                            for x in engagement_counts.values() if x["Episode"] != "Total"])
+    ).mark_bar().encode(
+        x=altair.X("episode:N", title="Episode"),
+        y=altair.Y("count:Q", title="Number of Participants")
+    ).properties(
+        title="Participants per Episode"
+    ).save(f"{output_dir}/participants_per_episode.png", scale_factor=IMG_SCALE_FACTOR)
 
     # Plot the per-season distribution of responses for each survey question, per individual
     for plan in PipelineConfiguration.RQA_CODING_PLANS + PipelineConfiguration.SURVEY_CODING_PLANS:
@@ -156,4 +381,3 @@ if __name__ == "__main__":
     else:
         log.info("Skipping uploading to Google Drive (because the pipeline configuration json does not contain the key "
                  "'DriveUploadPaths')")
-

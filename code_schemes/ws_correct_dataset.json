@@ -324,6 +324,28 @@
       ]
     },
     {
+      "CodeID": "code-ce0576ca",
+      "CodeType": "Normal",
+      "DisplayText": "responsible",
+      "StringValue": "responsible",
+      "NumericValue": 29,
+      "VisibleInCoda": true,
+      "MatchValues": [
+        "responsible"
+      ]
+    },
+    {
+      "CodeID": "code-c2cd8420",
+      "CodeType": "Normal",
+      "DisplayText": "solve_problems",
+      "StringValue": "solve_problems",
+      "NumericValue": 30,
+      "VisibleInCoda": true,
+      "MatchValues": [
+        "solve_problems"
+      ]
+    },
+    {
       "CodeID": "code-NC-42f1d983",
       "CodeType": "Control",
       "ControlCode": "NC",

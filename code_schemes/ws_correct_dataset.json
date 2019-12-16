@@ -304,12 +304,12 @@
     {
       "CodeID": "code-de134fc1",
       "CodeType": "Normal",
-      "DisplayText": "have_voice",
+      "DisplayText": "have voice",
       "StringValue": "have_voice",
       "NumericValue": 27,
       "VisibleInCoda": true,
       "MatchValues": [
-        "have_voice"
+        "have voice"
       ]
     },
     {
@@ -337,12 +337,12 @@
     {
       "CodeID": "code-c2cd8420",
       "CodeType": "Normal",
-      "DisplayText": "solve_problems",
+      "DisplayText": "solve problems",
       "StringValue": "solve_problems",
       "NumericValue": 31,
       "VisibleInCoda": true,
       "MatchValues": [
-        "solve_problems"
+        "solve problems"
       ]
     },
     {

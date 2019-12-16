@@ -24,6 +24,10 @@ DATASETS=(
     "recently_displaced"
     "in_idp_camp"
     "location"
+
+    "responsible"
+    "solve_problems"
+    "have_voice"
 )
 
 cd "$CODA_V2_ROOT/data_tools"

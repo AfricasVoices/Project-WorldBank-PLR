@@ -304,12 +304,12 @@
     {
       "CodeID": "code-de134fc1",
       "CodeType": "Normal",
-      "DisplayText": "have_voice",
+      "DisplayText": "have voice",
       "StringValue": "have_voice",
       "NumericValue": 27,
       "VisibleInCoda": true,
       "MatchValues": [
-        "have_voice"
+        "have voice"
       ]
     },
     {
@@ -321,6 +321,28 @@
       "VisibleInCoda": true,
       "MatchValues": [
         "suggestions"
+      ]
+    },
+    {
+      "CodeID": "code-ce0576ca",
+      "CodeType": "Normal",
+      "DisplayText": "responsible",
+      "StringValue": "responsible",
+      "NumericValue": 30,
+      "VisibleInCoda": true,
+      "MatchValues": [
+        "responsible"
+      ]
+    },
+    {
+      "CodeID": "code-c2cd8420",
+      "CodeType": "Normal",
+      "DisplayText": "solve problems",
+      "StringValue": "solve_problems",
+      "NumericValue": 31,
+      "VisibleInCoda": true,
+      "MatchValues": [
+        "solve problems"
       ]
     },
     {

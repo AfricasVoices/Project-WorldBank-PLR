@@ -243,6 +243,49 @@ class PipelineConfiguration(object):
                        )
                    ],
                    ws_code=CodeSchemes.WS_CORRECT_DATASET.get_code_with_match_value("in idp camp"),
+                   raw_field_folding_mode=FoldingModes.ASSERT_EQUAL),
+
+        CodingPlan(raw_field="responsible_raw",
+                   time_field="responsible_time",
+                   coda_filename="responsible.json",
+                   coding_configurations=[
+                       CodingConfiguration(
+                           coding_mode=CodingModes.MULTIPLE,
+                           code_scheme=CodeSchemes.RESPONSIBLE,
+                           coded_field="responsible_coded",
+                           analysis_file_key="responsible_",
+                           folding_mode=FoldingModes.MATRIX  # TODO: Assert equal?
+                       )
+                   ],
+                   raw_field_folding_mode=FoldingModes.ASSERT_EQUAL),
+
+        CodingPlan(raw_field="solve_problems_raw",
+                   time_field="solve_problems_time",
+                   coda_filename="solve_problems.json",
+                   coding_configurations=[
+                       CodingConfiguration(
+                           coding_mode=CodingModes.MULTIPLE,
+                           code_scheme=CodeSchemes.SOLVE_PROBLEMS,
+                           coded_field="solve_problems_coded",
+                           analysis_file_key="solve_problems_",
+                           folding_mode=FoldingModes.MATRIX  # TODO: Assert equal?
+                       )
+                   ],
+                   raw_field_folding_mode=FoldingModes.ASSERT_EQUAL),
+
+        CodingPlan(raw_field="have_voice_raw",
+                   time_field="have_voice_time",
+                   coda_filename="have_voice.json",
+                   coding_configurations=[
+                       CodingConfiguration(
+                           coding_mode=CodingModes.SINGLE,
+                           code_scheme=CodeSchemes.HAVE_VOICE_YES_NO_AMB,
+                           cleaner=somali.DemographicCleaner.clean_yes_no,
+                           coded_field="have_voice_coded",
+                           analysis_file_key="have_voice",
+                           folding_mode=FoldingModes.ASSERT_EQUAL
+                       )
+                   ],
                    raw_field_folding_mode=FoldingModes.ASSERT_EQUAL)
     ]
 

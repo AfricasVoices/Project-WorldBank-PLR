@@ -257,6 +257,7 @@ class PipelineConfiguration(object):
                            folding_mode=FoldingModes.MATRIX  # TODO: Assert equal?
                        )
                    ],
+                   ws_code=CodeSchemes.WS_CORRECT_DATASET.get_code_with_match_value("responsible"),
                    raw_field_folding_mode=FoldingModes.ASSERT_EQUAL),
 
         CodingPlan(raw_field="solve_problems_raw",
@@ -271,6 +272,7 @@ class PipelineConfiguration(object):
                            folding_mode=FoldingModes.MATRIX  # TODO: Assert equal?
                        )
                    ],
+                   ws_code=CodeSchemes.WS_CORRECT_DATASET.get_code_with_match_value("solve problems"),
                    raw_field_folding_mode=FoldingModes.ASSERT_EQUAL),
 
         CodingPlan(raw_field="have_voice_raw",
@@ -286,6 +288,7 @@ class PipelineConfiguration(object):
                            folding_mode=FoldingModes.ASSERT_EQUAL
                        )
                    ],
+                   ws_code=CodeSchemes.WS_CORRECT_DATASET.get_code_with_match_value("have voice"),
                    raw_field_folding_mode=FoldingModes.ASSERT_EQUAL)
     ]
 

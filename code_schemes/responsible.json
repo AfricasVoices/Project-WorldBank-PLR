@@ -1,9 +1,104 @@
 {
   "SchemeID": "Scheme-68cb434b",
   "Name": "Responsible",
-  "Version": "0.0.0.1",
+  "Version": "0.0.0.2",
   "Codes": [
-
+    {
+      "CodeID": "code-f9478d74",
+      "CodeType": "Normal",
+      "DisplayText": "local authority",
+      "NumericValue": 1,
+      "StringValue": "local_authority",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-102c5d42",
+      "CodeType": "Normal",
+      "DisplayText": "national government",
+      "NumericValue": 2,
+      "StringValue": "national_government",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-858f6601",
+      "CodeType": "Normal",
+      "DisplayText": "traditional leaders",
+      "NumericValue": 3,
+      "StringValue": "traditional_leaders",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-9f536460",
+      "CodeType": "Normal",
+      "DisplayText": "men",
+      "NumericValue": 4,
+      "StringValue": "men",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-6dd0f7bd",
+      "CodeType": "Normal",
+      "DisplayText": "the community",
+      "NumericValue": 5,
+      "StringValue": "the_community",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-d3a87ea3",
+      "CodeType": "Normal",
+      "DisplayText": "religious leaders",
+      "NumericValue": 6,
+      "StringValue": "religious_leaders",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-70859c6f",
+      "CodeType": "Normal",
+      "DisplayText": "youth",
+      "NumericValue": 7,
+      "StringValue": "youth",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-029d0ffb",
+      "CodeType": "Normal",
+      "DisplayText": "the parents",
+      "NumericValue": 8,
+      "StringValue": "the_parents",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-10ba87b7",
+      "CodeType": "Normal",
+      "DisplayText": "women",
+      "NumericValue": 9,
+      "StringValue": "women",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-561a1732",
+      "CodeType": "Normal",
+      "DisplayText": "experts/scholars",
+      "NumericValue": 10,
+      "StringValue": "experts_and_scholars",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-64fc28ac",
+      "CodeType": "Normal",
+      "DisplayText": "everyone",
+      "NumericValue": 11,
+      "StringValue": "everyone",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-0c4e316b",
+      "CodeType": "Normal",
+      "DisplayText": "other",
+      "NumericValue": 12,
+      "StringValue": "other",
+      "VisibleInCoda": true
+    },
     {
       "CodeID": "code-NA-f93d3eb7",
       "CodeType": "Control",

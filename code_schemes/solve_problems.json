@@ -3,7 +3,118 @@
   "Name": "Solve Problems",
   "Version": "0.0.0.1",
   "Codes": [
-
+    {
+      "CodeID": "code-40e87286",
+      "CodeType": "Normal",
+      "DisplayText": "national government",
+      "NumericValue": 1,
+      "StringValue": "national_government",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-d9b5155c",
+      "CodeType": "Normal",
+      "DisplayText": "local government",
+      "NumericValue": 2,
+      "StringValue": "local_government",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-2f981510",
+      "CodeType": "Normal",
+      "DisplayText": "experts/scholars",
+      "NumericValue": 3,
+      "StringValue": "experts_scholars",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-86664429",
+      "CodeType": "Normal",
+      "DisplayText": "family and friends",
+      "NumericValue": 4,
+      "StringValue": "family_and_friends",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-99c6b113",
+      "CodeType": "Normal",
+      "DisplayText": "god",
+      "NumericValue": 5,
+      "StringValue": "god",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-cc390a15",
+      "CodeType": "Normal",
+      "DisplayText": "traditional elders",
+      "NumericValue": 6,
+      "StringValue": "traditional_elders",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-316c6735",
+      "CodeType": "Normal",
+      "DisplayText": "community",
+      "NumericValue": 7,
+      "StringValue": "community",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-92b7ebc2",
+      "CodeType": "Normal",
+      "DisplayText": "police",
+      "NumericValue": 8,
+      "StringValue": "police",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-5dabd230",
+      "CodeType": "Normal",
+      "DisplayText": "religious leaders",
+      "NumericValue": 9,
+      "StringValue": "religious_leaders",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-e0ac8a9e",
+      "CodeType": "Normal",
+      "DisplayText": "media",
+      "NumericValue": 10,
+      "StringValue": "media",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-03804084",
+      "CodeType": "Normal",
+      "DisplayText": "everyone",
+      "NumericValue": 11,
+      "StringValue": "everyone",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-2d714ac7",
+      "CodeType": "Normal",
+      "DisplayText": "business people",
+      "NumericValue": 12,
+      "StringValue": "business_people",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-1a351026",
+      "CodeType": "Normal",
+      "DisplayText": "service deliverers",
+      "NumericValue": 13,
+      "StringValue": "service_deliverers",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-d49a3814",
+      "CodeType": "Normal",
+      "DisplayText": "other",
+      "NumericValue": 14,
+      "StringValue": "other",
+      "VisibleInCoda": true
+    },
     {
       "CodeID": "code-NA-f93d3eb7",
       "CodeType": "Control",

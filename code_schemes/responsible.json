@@ -1,7 +1,7 @@
 {
   "SchemeID": "Scheme-68cb434b",
   "Name": "Responsible",
-  "Version": "0.0.0.1",
+  "Version": "0.0.0.2",
   "Codes": [
     {
       "CodeID": "code-f9478d74",
@@ -80,7 +80,7 @@
       "CodeType": "Normal",
       "DisplayText": "experts/scholars",
       "NumericValue": 10,
-      "StringValue": "experts_scholars",
+      "StringValue": "experts_and_scholars",
       "VisibleInCoda": true
     },
     {

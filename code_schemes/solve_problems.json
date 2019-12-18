@@ -1,7 +1,7 @@
 {
   "SchemeID": "Scheme-d21e921a",
   "Name": "Solve Problems",
-  "Version": "0.0.0.1",
+  "Version": "0.0.0.2",
   "Codes": [
     {
       "CodeID": "code-40e87286",
@@ -24,7 +24,7 @@
       "CodeType": "Normal",
       "DisplayText": "experts/scholars",
       "NumericValue": 3,
-      "StringValue": "experts_scholars",
+      "StringValue": "experts_and_scholars",
       "VisibleInCoda": true
     },
     {

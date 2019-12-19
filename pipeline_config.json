@@ -103,7 +103,7 @@
     {"RapidProKey": "Csap_S05_Have_Voice (Time) - csap_s05_evaluation", "PipelineKey": "have_voice_time"}
   ],
   "ProjectStartDate": "2019-12-01T00:00:00+03:00",
-  "ProjectEndDate": "2100-01-01T00:00:00+03:00",
+  "ProjectEndDate": "2019-12-19T14:00:00+03:00",
   "FilterTestMessages": true,
   "MoveWSMessages": true,
   "DriveUpload": {

@@ -16,7 +16,7 @@ from storage.google_drive import drive_client_wrapper
 from src.lib import PipelineConfiguration
 from src.lib.pipeline_configuration import CodingModes
 
-Logger.set_project_name("OCHA")
+Logger.set_project_name("WorldBank-PLR")
 log = Logger(__name__)
 
 IMG_SCALE_FACTOR = 10  # Increase this to increase the resolution of the outputted PNGs

@@ -244,8 +244,10 @@ class PipelineConfiguration(object):
                        )
                    ],
                    ws_code=CodeSchemes.WS_CORRECT_DATASET.get_code_with_match_value("in idp camp"),
-                   raw_field_folding_mode=FoldingModes.ASSERT_EQUAL),
+                   raw_field_folding_mode=FoldingModes.ASSERT_EQUAL)
+    ]
 
+    FOLLOW_UP_CODING_PLANS = [
         CodingPlan(raw_field="responsible_raw",
                    time_field="responsible_time",
                    coda_filename="responsible.json",
@@ -292,8 +294,6 @@ class PipelineConfiguration(object):
                    ws_code=CodeSchemes.WS_CORRECT_DATASET.get_code_with_match_value("have voice"),
                    raw_field_folding_mode=FoldingModes.ASSERT_EQUAL)
     ]
-
-    FOLLOW_UP_CODING_PLANS = []
 
     SURVEY_CODING_PLANS = [OPERATOR_CODING_PLAN] + DEMOG_CODING_PLANS + FOLLOW_UP_CODING_PLANS
 
